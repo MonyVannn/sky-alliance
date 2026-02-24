@@ -135,6 +135,7 @@ export default function ServicesSection() {
     <>
       {/* ── Desktop (md+): sticky scroll experience ─────────────────────── */}
       <section
+        id="services"
         ref={containerRef}
         className="relative hidden md:block"
         style={{ height: "300vh", backgroundColor: "#fefefe" }}

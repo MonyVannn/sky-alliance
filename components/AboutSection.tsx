@@ -144,6 +144,7 @@ export default function AboutSection() {
 
   return (
     <section
+      id="about"
       className="relative py-24 md:py-36 overflow-hidden"
       style={{ backgroundColor: "#fefefe" }}
     >

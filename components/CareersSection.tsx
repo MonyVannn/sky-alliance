@@ -407,6 +407,7 @@ export default function CareersSection() {
   return (
     <section
       ref={sectionRef}
+      id="careers"
       className="py-24 md:py-36 px-4 sm:px-6 md:px-12"
       style={{ backgroundColor: "#f9f7f4" }}
     >

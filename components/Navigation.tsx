@@ -30,10 +30,9 @@ export default function Navigation() {
         <Logo />
         <div className="flex items-center gap-6 text-base font-medium">
           <NavLink href="/">Home</NavLink>
-          <NavLink href="/about">About</NavLink>
-          <NavLink href="/services">Services</NavLink>
-          <NavLink href="/contact">Contact</NavLink>
-          <NavLink href="/careers">Careers</NavLink>
+          <NavLink href="#about">About</NavLink>
+          <NavLink href="#services">Services</NavLink>
+          <NavLink href="#careers">Careers</NavLink>
 
           <JoinButton />
         </div>

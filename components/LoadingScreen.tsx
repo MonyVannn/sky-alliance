@@ -1,137 +1,130 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSplineLoading } from "@/components/SplineLoadingContext";
 
 export default function LoadingScreen({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const hasPlayed =
-    typeof window !== "undefined" &&
-    sessionStorage.getItem("sky-loaded") === "true";
+  const [isLoading, setIsLoading] = useState(true);
+  const [displayProgress, setDisplayProgress] = useState(0);
+  const [fontsReady, setFontsReady] = useState(false);
+  const targetProgressRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+  const { splineLoaded } = useSplineLoading();
 
-  const [isLoading, setIsLoading] = useState(!hasPlayed);
-  const [fontsReady, setFontsReady] = useState(hasPlayed);
-
+  // RAF loop: smoothly animate display toward target
   useEffect(() => {
-    if (hasPlayed) return;
-    document.fonts.ready.then(() => setFontsReady(true));
-  }, [hasPlayed]);
+    const animate = () => {
+      setDisplayProgress((prev) => {
+        const diff = targetProgressRef.current - prev;
+        if (Math.abs(diff) < 0.5) return targetProgressRef.current;
+        return prev + diff * 0.07;
+      });
+      rafRef.current = requestAnimationFrame(animate);
+    };
+    rafRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
 
+  // Font loading → 40%
+  useEffect(() => {
+    document.fonts.ready.then(() => {
+      setFontsReady(true);
+      targetProgressRef.current = Math.max(targetProgressRef.current, 40);
+    });
+  }, []);
+
+  // Spline loaded → 100%
+  useEffect(() => {
+    if (splineLoaded) {
+      targetProgressRef.current = 100;
+    }
+  }, [splineLoaded]);
+
+  // Fallback: fonts ready but Spline never fires (mobile/hidden) → complete after timeout
   useEffect(() => {
     if (!fontsReady) return;
-
-    const minDisplayTime = setTimeout(() => {
-      sessionStorage.setItem("sky-loaded", "true");
-      setIsLoading(false);
-    }, 2800);
-
-    return () => clearTimeout(minDisplayTime);
+    const fallback = setTimeout(() => {
+      targetProgressRef.current = 100;
+    }, 4000);
+    return () => clearTimeout(fallback);
   }, [fontsReady]);
 
+  // Once display reaches 100%, wait a beat then dismiss
   useEffect(() => {
-    if (isLoading) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
+    if (!isLoading) return;
+    if (displayProgress >= 99.5) {
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 400);
+      return () => clearTimeout(timer);
     }
+  }, [displayProgress, isLoading]);
+
+  // Lock scroll while loading
+  useEffect(() => {
+    document.body.style.overflow = isLoading ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
   }, [isLoading]);
 
-  const companyName = "Sky Alliance Inc.";
-  const letters = companyName.split("");
+  const rounded = Math.min(100, Math.round(displayProgress));
 
   return (
     <>
       <AnimatePresence mode="wait">
         {isLoading && (
           <motion.div
-            key="loading-screen"
-            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#0a0118]"
+            key="preloader"
+            className="fixed inset-0 z-[9999] bg-white overflow-hidden"
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
           >
-            {/* Ambient glow */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <motion.div
-                className="absolute w-[600px] h-[600px] rounded-full"
-                style={{
-                  background:
-                    "radial-gradient(circle, rgba(106, 27, 154, 0.15) 0%, transparent 70%)",
-                  top: "30%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                }}
-                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
-              <motion.div
-                className="absolute w-[400px] h-[400px] rounded-full"
-                style={{
-                  background:
-                    "radial-gradient(circle, rgba(255, 167, 38, 0.08) 0%, transparent 70%)",
-                  top: "55%",
-                  left: "55%",
-                  transform: "translate(-50%, -50%)",
-                }}
-                animate={{ scale: [1.1, 1, 1.1], opacity: [0.3, 0.6, 0.3] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.5,
-                }}
-              />
-            </div>
-
-            {/* Main text */}
-            <div className="relative flex overflow-hidden">
-              {letters.map((letter, index) => (
-                <motion.span
-                  key={index}
-                  className="loading-letter text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight"
-                  style={{
-                    display: "inline-block",
-                    whiteSpace: "pre",
-                  }}
-                  initial={{ y: "100%", opacity: 0 }}
-                  animate={{ y: "0%", opacity: 1 }}
-                  transition={{
-                    duration: 0.6,
-                    delay: 0.3 + index * 0.04,
-                    ease: [0.33, 1, 0.68, 1],
-                  }}
-                >
-                  {letter}
-                </motion.span>
-              ))}
-            </div>
-
-            {/* Expanding line */}
+            {/* Orange vertical bar — left edge, fills upward */}
             <motion.div
-              className="mt-6 h-[1px] bg-gradient-to-r from-transparent via-purple-lavender/60 to-transparent"
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: "180px", opacity: 1 }}
-              transition={{
-                duration: 1,
-                delay: 1,
-                ease: [0.33, 1, 0.68, 1],
-              }}
+              className="absolute left-0 bottom-0 w-[14px]"
+              style={{ background: "var(--purple-medium)" }}
+              animate={{ height: `${rounded}%` }}
+              transition={{ ease: "linear", duration: 0.1 }}
             />
 
-            {/* Tagline */}
-            <motion.p
-              className="mt-4 text-sm tracking-[0.3em] uppercase text-white/30"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.4, ease: "easeOut" }}
+            {/* Big number — bottom left */}
+            <div
+              className="absolute bottom-10 left-14 select-none"
+              style={{ fontFamily: "var(--font-archivo-black), sans-serif" }}
             >
-              Beyond the sky
-            </motion.p>
+              <div className="relative inline-block leading-none">
+                <span
+                  style={{
+                    fontSize: "clamp(5rem, 20vw, 18rem)",
+                    color: "#0a0a0a",
+                    lineHeight: 0.85,
+                    display: "block",
+                  }}
+                >
+                  {rounded}
+                </span>
+                <span
+                  className="absolute top-[8%] right-[-1.1em]"
+                  style={{
+                    fontSize: "clamp(1.2rem, 3.5vw, 3.5rem)",
+                    color: "#0a0a0a",
+                    opacity: 0.75,
+                    fontFamily: "var(--font-sora), sans-serif",
+                    fontWeight: 300,
+                  }}
+                >
+                  %
+                </span>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -139,7 +132,7 @@ export default function LoadingScreen({
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: isLoading ? 0 : 1 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
+        transition={{ duration: 0.6, delay: 0.1 }}
       >
         {children}
       </motion.div>

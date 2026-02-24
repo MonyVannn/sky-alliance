@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { FiArrowRight } from "react-icons/fi";
 import dynamic from "next/dynamic";
+import { useSplineLoading } from "@/components/SplineLoadingContext";
 
 const Spline = dynamic(
   () => import("@splinetool/react-spline").then((mod) => mod.default),
@@ -14,9 +15,9 @@ const Spline = dynamic(
 
 const SplineWrapper = ({ scene }: { scene: string }) => {
   const splineRef = useRef<HTMLDivElement>(null);
+  const { notifySplineLoaded } = useSplineLoading();
 
   useEffect(() => {
-    // Remove white background from Spline canvas
     const checkCanvas = setInterval(() => {
       if (splineRef.current) {
         const canvas = splineRef.current.querySelector("canvas");
@@ -32,7 +33,7 @@ const SplineWrapper = ({ scene }: { scene: string }) => {
 
   return (
     <div ref={splineRef} className="w-full h-full">
-      <Spline scene={scene} className="w-full h-full" />
+      <Spline scene={scene} className="w-full h-full" onLoad={notifySplineLoaded} />
     </div>
   );
 };

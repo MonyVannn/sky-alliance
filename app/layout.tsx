@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Sora, Geist_Mono, Archivo_Black } from "next/font/google";
 import "./globals.css";
+import { SplineLoadingProvider } from "@/components/SplineLoadingContext";
+import LoadingScreen from "@/components/LoadingScreen";
 
 const sora = Sora({
   variable: "--font-sora",
@@ -32,7 +34,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${sora.variable} ${geistMono.variable} ${archivoBlack.variable} antialiased`}>
-        {children}
+        <SplineLoadingProvider>
+          <LoadingScreen>
+            {children}
+          </LoadingScreen>
+        </SplineLoadingProvider>
       </body>
     </html>
   );
