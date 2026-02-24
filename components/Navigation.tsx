@@ -34,7 +34,7 @@ export default function Navigation() {
       <div className="flex items-center justify-between container mx-auto py-4 text-sm text-[#171717]">
         <Logo />
         <div className="flex items-center gap-6 text-base font-medium">
-          <NavLink href="#home">Home</NavLink>
+          <NavLink href="/">Home</NavLink>
           <NavLink href="#about">About</NavLink>
           <NavLink href="#services">Services</NavLink>
           <NavLink href="#careers">Careers</NavLink>

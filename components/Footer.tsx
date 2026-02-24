@@ -17,7 +17,7 @@ const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
   { label: "Careers", href: "#careers" },
-  { label: "Contact", href: "#contact" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const SOCIALS = [
@@ -85,7 +85,7 @@ export default function Footer() {
               <span className="text-white/60">Apply today.</span>
             </h2>
             <Link
-              href="#contact"
+              href="/contact"
               className="self-start px-8 py-3.5 bg-[#ff6f00] hover:bg-[#e65100] transition-colors duration-200 text-sm font-semibold tracking-wide"
             >
               Contact us
