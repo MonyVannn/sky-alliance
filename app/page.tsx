@@ -4,6 +4,7 @@ import Intro from "@/components/Intro";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import CareersSection from "@/components/CareersSection";
+import Footer from "@/components/Footer";
 import ScrollSmootherWrapper from "@/components/ScrollSmootherWrapper";
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
           <ServicesSection />
           <CareersSection />
         </main>
+        <Footer />
       </ScrollSmootherWrapper>
     </>
   );

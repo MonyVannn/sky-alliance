@@ -147,9 +147,9 @@ export default function ServicesSection() {
         className="relative hidden md:block"
         style={{ height: "300vh", backgroundColor: "#fefefe" }}
       >
-        <div ref={stickyRef} className="h-fit overflow-hidden py-52">
+        <div ref={stickyRef} className="h-fit overflow-hidden py-32 lg:py-52">
           <div className="container mx-auto h-full px-6 md:px-12 py-10">
-            <div className="grid grid-cols-2 gap-4 md:gap-5 h-[1000px]">
+            <div className="grid grid-cols-2 gap-4 md:gap-5 h-[800px] lg:h-[1000px]">
               {/* Left: sticky "OUR SERVICES" image card */}
               <div className="relative overflow-hidden">
                 <img
@@ -169,9 +169,9 @@ export default function ServicesSection() {
                   {/* Bottom: headline + progress indicators */}
                   <div>
                     <h2
-                      className="font-black text-white uppercase leading-[0.88] tracking-tight"
+                      className="font-black text-white uppercase leading-[0.88] tracking-tight text-5xl lg:text-8xl"
                       style={{
-                        fontSize: "clamp(3.5rem, 8vw, 7rem)",
+                        // fontSize: "clamp(3.5rem, 8vw, 7rem)",
                         fontFamily: "var(--font-sora), sans-serif",
                       }}
                     >

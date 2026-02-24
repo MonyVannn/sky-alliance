@@ -83,14 +83,32 @@ export default function LoadingScreen({
         {isLoading && (
           <motion.div
             key="preloader"
-            className="fixed inset-0 z-[9999] bg-white overflow-hidden"
+            className="fixed inset-0 z-[9999] overflow-hidden"
+            style={{
+              background:
+                "linear-gradient(135deg, #1a0533 0%, #4a148c 40%, #6a1b9a 65%, #3d1000 100%)",
+            }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
           >
+            {/* Fuzzy noise overlay */}
+            <motion.div
+              initial={{ transform: "translateX(-10%) translateY(-10%)" }}
+              animate={{ transform: "translateX(10%) translateY(10%)" }}
+              transition={{
+                repeat: Infinity,
+                duration: 0.2,
+                ease: "linear",
+                repeatType: "mirror",
+              }}
+              style={{ backgroundImage: 'url("/black-noise.png")' }}
+              className="pointer-events-none absolute -inset-[100%] opacity-[8%]"
+            />
+
             {/* Orange vertical bar — left edge, fills upward */}
             <motion.div
               className="absolute left-0 bottom-0 w-[14px]"
-              style={{ background: "var(--purple-medium)" }}
+              style={{ background: "white" }}
               animate={{ height: `${rounded}%` }}
               transition={{ ease: "linear", duration: 0.1 }}
             />
@@ -104,7 +122,7 @@ export default function LoadingScreen({
                 <span
                   style={{
                     fontSize: "clamp(5rem, 20vw, 18rem)",
-                    color: "#0a0a0a",
+                    color: "white",
                     lineHeight: 0.85,
                     display: "block",
                   }}
@@ -115,7 +133,7 @@ export default function LoadingScreen({
                   className="absolute top-[8%] right-[-1.1em]"
                   style={{
                     fontSize: "clamp(1.2rem, 3.5vw, 3.5rem)",
-                    color: "#0a0a0a",
+                    color: "white",
                     opacity: 0.75,
                     fontFamily: "var(--font-sora), sans-serif",
                     fontWeight: 300,
