@@ -1,6 +1,7 @@
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import Intro from "@/components/Intro";
+import AboutSection from "@/components/AboutSection";
 
 export default function Home() {
   return (
@@ -8,7 +9,7 @@ export default function Home() {
       <Navigation />
       <Hero />
       <Intro />
-      <div className="h-screen"></div>
+      <AboutSection />
     </main>
   );
 }

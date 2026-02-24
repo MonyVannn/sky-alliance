@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Sora, Geist_Mono } from "next/font/google";
+import { Sora, Geist_Mono, Archivo_Black } from "next/font/google";
 import "./globals.css";
 
 const sora = Sora({
@@ -9,6 +9,12 @@ const sora = Sora({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const archivoBlack = Archivo_Black({
+  variable: "--font-archivo-black",
+  weight: "400",
   subsets: ["latin"],
 });
 
@@ -25,7 +31,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sora.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${sora.variable} ${geistMono.variable} ${archivoBlack.variable} antialiased`}>
         {children}
       </body>
     </html>
