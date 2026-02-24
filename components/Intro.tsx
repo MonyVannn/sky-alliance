@@ -49,7 +49,7 @@ export default function Intro() {
     <section
       ref={sectionRef}
       className="relative py-24 md:py-64 px-4 sm:px-6 md:px-12"
-      style={{ backgroundColor: "#fcfaf0" }}
+      style={{ backgroundColor: "#fefefe" }}
     >
       <div className="container mx-auto text-center">
         {/* Main heading with word-by-word scroll reveal */}

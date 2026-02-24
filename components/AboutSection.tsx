@@ -145,7 +145,7 @@ export default function AboutSection() {
   return (
     <section
       className="relative py-24 md:py-36 overflow-hidden"
-      style={{ backgroundColor: "#fcfaf0" }}
+      style={{ backgroundColor: "#fefefe" }}
     >
       {/* Spline 3D background */}
       <div className="absolute inset-0 pointer-events-none">
