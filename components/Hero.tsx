@@ -121,7 +121,7 @@ export default function Hero() {
       />
 
       {/* Spline 3D Object - Right Side */}
-      <div className="absolute top-0 right-0 w-full md:w-1/2 h-full z-[5] pointer-events-none hidden lg:block">
+      <div className="absolute top-0 right-0 w-2/3 h-full z-[5] pointer-events-none hidden lg:block">
         <div className="relative w-full h-full">
           <Suspense fallback={null}>
             <SplineWrapper scene="https://prod.spline.design/90e2VVgs3MwvP52T/scene.splinecode" />

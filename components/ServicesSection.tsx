@@ -16,7 +16,7 @@ const SERVICES = [
   },
   {
     number: "02",
-    title: "BRAND REPRESENTATION & CUSTOMER ACQUISITION",
+    title: "BRAND REPS & CUSTOMER ACQUISITION",
     description:
       "We represent clients with professionalism and authenticity, ensuring every interaction reflects their values and strengthens consumer trust. Your brand becomes our mission, and we elevate it at every step.",
   },
@@ -147,9 +147,12 @@ export default function ServicesSection() {
         className="relative hidden md:block"
         style={{ height: "300vh", backgroundColor: "#fefefe" }}
       >
-        <div ref={stickyRef} className="h-fit overflow-hidden py-32 lg:py-52">
-          <div className="container mx-auto h-full px-6 md:px-12 py-10">
-            <div className="grid grid-cols-2 gap-4 md:gap-5 h-[800px] lg:h-[1000px]">
+        <div
+          ref={stickyRef}
+          className="h-dvh overflow-hidden bg-[#fefefe] flex items-center justify-center"
+        >
+          <div className="container mx-auto h-2/3 px-6 md:px-12 py-6">
+            <div className="grid grid-cols-2 gap-4 md:gap-5 h-full">
               {/* Left: sticky "OUR SERVICES" image card */}
               <div className="relative overflow-hidden">
                 <img
@@ -252,7 +255,7 @@ export default function ServicesSection() {
 
                     {/* Service description */}
                     <motion.p
-                      className="text-base md:text-lg max-w-xs leading-relaxed"
+                      className="text-base md:text-lg max-w-base leading-relaxed"
                       style={{ color: theme.descColor }}
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}

@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useState } from "react";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
@@ -10,6 +11,7 @@ import { ScrollSmoother } from "gsap/ScrollSmoother";
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 export default function Navigation() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const backdropBlur = useTransform(
     scrollYProgress,
@@ -29,19 +31,64 @@ export default function Navigation() {
         WebkitBackdropFilter: backdropBlur,
         backgroundColor,
       }}
-      className="fixed z-50 w-full  "
+      className="fixed z-50 w-full"
     >
-      <div className="flex items-center justify-between container mx-auto py-4 text-sm text-[#171717]">
+      <div className="flex items-center justify-between container mx-auto py-4 px-4 sm:px-6 lg:px-12 text-sm text-[#171717]">
         <Logo />
-        <div className="flex items-center gap-6 text-base font-medium">
+
+        {/* Desktop links */}
+        <div className="hidden lg:flex items-center gap-6 text-base font-medium">
           <NavLink href="/">Home</NavLink>
           <NavLink href="#about">About</NavLink>
           <NavLink href="#services">Services</NavLink>
           <NavLink href="#careers">Careers</NavLink>
-
           <JoinButton />
         </div>
+
+        {/* Hamburger button */}
+        <button
+          className="lg:hidden flex flex-col justify-center gap-[5px] p-2 cursor-pointer"
+          onClick={() => setMenuOpen((prev) => !prev)}
+          aria-label="Toggle menu"
+        >
+          <motion.span
+            animate={menuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+            transition={{ duration: 0.25 }}
+            className="block w-6 h-[2px] bg-[#171717] origin-center"
+          />
+          <motion.span
+            animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
+            transition={{ duration: 0.15 }}
+            className="block w-6 h-[2px] bg-[#171717]"
+          />
+          <motion.span
+            animate={menuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+            transition={{ duration: 0.25 }}
+            className="block w-6 h-[2px] bg-[#171717] origin-center"
+          />
+        </button>
       </div>
+
+      {/* Mobile dropdown */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="lg:hidden bg-white/95 backdrop-blur-md border-t border-neutral-100 shadow-lg"
+          >
+            <MobileNavLink href="/" onClick={() => setMenuOpen(false)}>Home</MobileNavLink>
+            <MobileNavLink href="#about" onClick={() => setMenuOpen(false)}>About</MobileNavLink>
+            <MobileNavLink href="#services" onClick={() => setMenuOpen(false)}>Services</MobileNavLink>
+            <MobileNavLink href="#careers" onClick={() => setMenuOpen(false)}>Careers</MobileNavLink>
+            <div className="px-4 py-4">
+              <JoinButton />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.nav>
   );
 }

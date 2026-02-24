@@ -17,7 +17,7 @@ function RevealWord({
 }) {
   const revealWindow = 0.4;
   const wordDuration = 0.06;
-  const start = (index / totalWords) * revealWindow + 0.09;
+  const start = (index / totalWords) * revealWindow + 0.13;
   const end = start + wordDuration;
   const opacity = useTransform(scrollYProgress, [start, end], [0, 1]);
 
@@ -48,7 +48,7 @@ export default function Intro() {
   return (
     <section
       ref={sectionRef}
-      className="relative py-24 md:py-64 px-4 sm:px-6 md:px-12"
+      className="relative py-24 md:py-44 px-4 sm:px-6 md:px-12"
       style={{ backgroundColor: "#fefefe" }}
     >
       <div className="container mx-auto text-center">

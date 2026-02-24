@@ -73,7 +73,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#4a148c] text-white">
       {/* Top section */}
-      <div className="max-w-screen-xl mx-auto px-8 pt-20 pb-16">
+      <div className="max-w-screen-xl mx-auto px-4 sm:px-8 lg:px-12 pt-20 pb-16">
         <div className="flex flex-col lg:flex-row justify-between gap-16">
           {/* CTA left */}
           <div className="flex flex-col gap-8 max-w-lg">
@@ -168,7 +168,7 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="max-w-screen-xl mx-auto px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="max-w-screen-xl mx-auto px-4 sm:px-8 lg:px-12 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <span className="text-xs text-white/40">
             2026 © Sky Alliance — All rights reserved
           </span>
