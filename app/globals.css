@@ -54,3 +54,18 @@ body {
 .blur-light-sm {
   filter: blur(60px);
 }
+
+/* ScrollSmoother layout */
+#smooth-wrapper {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+#smooth-content {
+  overflow: visible;
+  width: 100%;
+}

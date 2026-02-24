@@ -1,13 +1,11 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useMotionValueEvent,
-  useInView,
-} from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const SERVICES = [
   {
@@ -107,6 +105,7 @@ function MobileServiceCard({
 
 export default function ServicesSection() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const stickyRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -117,16 +116,24 @@ export default function ServicesSection() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
+  useEffect(() => {
+    if (isMobile || !containerRef.current || !stickyRef.current) return;
 
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (isMobile) return;
-    const newIndex = Math.min(3, Math.floor(latest * 4));
-    setActiveIndex(newIndex);
-  });
+    const trigger = ScrollTrigger.create({
+      trigger: containerRef.current,
+      start: "top top",
+      end: "bottom bottom",
+      pin: stickyRef.current,
+      onUpdate: (self) => {
+        const newIndex = Math.min(3, Math.floor(self.progress * 4));
+        setActiveIndex(newIndex);
+      },
+    });
+
+    return () => {
+      trigger.kill();
+    };
+  }, [isMobile]);
 
   const theme = CARD_THEMES[activeIndex];
   const service = SERVICES[activeIndex];
@@ -140,7 +147,7 @@ export default function ServicesSection() {
         className="relative hidden md:block"
         style={{ height: "300vh", backgroundColor: "#fefefe" }}
       >
-        <div className="sticky top-0 h-fit overflow-hidden py-52">
+        <div ref={stickyRef} className="h-fit overflow-hidden py-52">
           <div className="container mx-auto h-full px-6 md:px-12 py-10">
             <div className="grid grid-cols-2 gap-4 md:gap-5 h-[1000px]">
               {/* Left: sticky "OUR SERVICES" image card */}

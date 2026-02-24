@@ -33,7 +33,11 @@ const SplineWrapper = ({ scene }: { scene: string }) => {
 
   return (
     <div ref={splineRef} className="w-full h-full">
-      <Spline scene={scene} className="w-full h-full" onLoad={notifySplineLoaded} />
+      <Spline
+        scene={scene}
+        className="w-full h-full"
+        onLoad={notifySplineLoaded}
+      />
     </div>
   );
 };
@@ -55,7 +59,10 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section
+      id="home"
+      className="relative min-h-screen flex items-center overflow-hidden"
+    >
       {/* Animated Blurred Lights Background */}
       <div
         ref={containerRef}

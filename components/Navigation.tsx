@@ -3,6 +3,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
+
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 export default function Navigation() {
   const { scrollYProgress } = useScroll();
@@ -29,7 +34,7 @@ export default function Navigation() {
       <div className="flex items-center justify-between container mx-auto py-4 text-sm text-[#171717]">
         <Logo />
         <div className="flex items-center gap-6 text-base font-medium">
-          <NavLink href="/">Home</NavLink>
+          <NavLink href="#home">Home</NavLink>
           <NavLink href="#about">About</NavLink>
           <NavLink href="#services">Services</NavLink>
           <NavLink href="#careers">Careers</NavLink>
@@ -57,8 +62,17 @@ const Logo = () => {
 };
 
 const NavLink = ({ children, href }: { children: string; href: string }) => {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!href.startsWith("#")) return;
+    e.preventDefault();
+    const smoother = ScrollSmoother.get();
+    if (smoother) {
+      smoother.scrollTo(href, true, "top top");
+    }
+  };
+
   return (
-    <Link href={href} className="block overflow-hidden">
+    <Link href={href} onClick={handleClick} className="block overflow-hidden">
       <motion.div
         whileHover={{ y: -20 }}
         transition={{ ease: "backInOut", duration: 0.5 }}

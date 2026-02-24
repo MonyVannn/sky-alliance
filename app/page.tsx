@@ -4,16 +4,22 @@ import Intro from "@/components/Intro";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import CareersSection from "@/components/CareersSection";
+import ScrollSmootherWrapper from "@/components/ScrollSmootherWrapper";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white">
+    <>
+      {/* Navigation must live outside smooth-wrapper since position:fixed breaks inside CSS transforms */}
       <Navigation />
-      <Hero />
-      <Intro />
-      <AboutSection />
-      <ServicesSection />
-      <CareersSection />
-    </main>
+      <ScrollSmootherWrapper>
+        <main className="min-h-screen bg-white">
+          <Hero />
+          <Intro />
+          <AboutSection />
+          <ServicesSection />
+          <CareersSection />
+        </main>
+      </ScrollSmootherWrapper>
+    </>
   );
 }
