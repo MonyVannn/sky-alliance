@@ -1,42 +1,10 @@
 "use client";
 
-import { useRef, useEffect, Suspense } from "react";
+import { useRef } from "react";
 import React from "react";
 import { motion, useInView } from "framer-motion";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import dynamic from "next/dynamic";
-
-const Spline = dynamic(
-  () => import("@splinetool/react-spline").then((mod) => mod.default),
-  { ssr: false },
-);
-
-function SplineBackground() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const checkCanvas = setInterval(() => {
-      if (wrapperRef.current) {
-        const canvas = wrapperRef.current.querySelector("canvas");
-        if (canvas) {
-          canvas.style.background = "transparent";
-          clearInterval(checkCanvas);
-        }
-      }
-    }, 100);
-    return () => clearInterval(checkCanvas);
-  }, []);
-
-  return (
-    <div ref={wrapperRef} className="w-full h-full">
-      <Spline
-        scene="https://prod.spline.design/jjMMrwS3BGTZVcSx/scene.splinecode"
-        className="w-full h-full"
-      />
-    </div>
-  );
-}
 
 const SECTION = {
   headline: "Sky-high standard.",
@@ -157,14 +125,83 @@ export default function AboutSection() {
     <section
       id="about"
       className="relative py-24 md:py-36 overflow-hidden"
-      style={{ backgroundColor: "#fefefe" }}
+      style={{ backgroundColor: "#0d0d0d" }}
     >
-      {/* Spline 3D background */}
-      <div className="absolute inset-0 pointer-events-none">
-        <Suspense fallback={null}>
-          <SplineBackground />
-        </Suspense>
+      {/* Ribbon background — single CSS blur pass on the GPU layer */}
+      <div
+        className="absolute inset-0 overflow-hidden pointer-events-none"
+        style={{
+          filter: "blur(32px)",
+          willChange: "transform",
+          transform: "translateZ(0)",
+        }}
+      >
+        <svg
+          className="absolute inset-0 w-full h-full"
+          viewBox="0 0 1440 900"
+          preserveAspectRatio="xMidYMid slice"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Ribbon 1: Purple — S-curve across upper half */}
+          <path
+            d="M -160 180 C 180 -80, 560 480, 920 220 S 1380 -40, 1600 160"
+            stroke="rgba(180,60,210,0.75)"
+            strokeWidth="180"
+            fill="none"
+            strokeLinecap="round"
+          />
+          {/* Ribbon 2: Orange — wide arc through the middle */}
+          <path
+            d="M -160 500 C 220 650, 580 260, 960 520 S 1340 780, 1600 560"
+            stroke="rgba(255,140,20,0.72)"
+            strokeWidth="195"
+            fill="none"
+            strokeLinecap="round"
+          />
+          {/* Ribbon 3: Deep violet — bottom-left up through center */}
+          <path
+            d="M -160 820 C 240 560, 660 880, 1020 620 S 1380 360, 1600 480"
+            stroke="rgba(120,15,210,0.7)"
+            strokeWidth="115"
+            fill="none"
+            strokeLinecap="round"
+          />
+          {/* Ribbon 4: Amber — top-right down to bottom-left */}
+          <path
+            d="M 1600 100 C 1280 380, 880 80, 580 340 S 120 620, -160 440"
+            stroke="rgba(255,165,25,0.68)"
+            strokeWidth="100"
+            fill="none"
+            strokeLinecap="round"
+          />
+          {/* Ribbon 5: Lavender — floats across lower third */}
+          <path
+            d="M -160 680 C 300 500, 700 760, 1060 560 S 1420 700, 1600 780"
+            stroke="rgba(205,135,235,0.65)"
+            strokeWidth="98"
+            fill="none"
+            strokeLinecap="round"
+          />
+        </svg>
       </div>
+
+      {/* Fuzzy Overlay Effect */}
+      <motion.div
+        initial={{ transform: "translateX(-10%) translateY(-10%)" }}
+        animate={{
+          transform: "translateX(10%) translateY(10%)",
+        }}
+        transition={{
+          repeat: Infinity,
+          duration: 0.2,
+          ease: "linear",
+          repeatType: "mirror",
+        }}
+        style={{
+          backgroundImage: 'url("/black-noise.png")',
+        }}
+        className="pointer-events-none absolute -inset-[100%] opacity-[5%]"
+      />
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-12">
         {/* Header block */}

@@ -55,6 +55,21 @@ body {
   filter: blur(60px);
 }
 
+/* Noise overlay — runs on compositor thread, zero JS cost */
+@keyframes noise-drift {
+  0%   { transform: translateX(-10%) translateY(-10%); }
+  100% { transform: translateX(10%)  translateY(10%);  }
+}
+
+.noise-overlay {
+  animation: noise-drift 8s linear infinite alternate;
+  pointer-events: none;
+  position: absolute;
+  inset: -100%;
+  opacity: 0.05;
+  will-change: transform;
+}
+
 /* ScrollSmoother layout */
 #smooth-wrapper {
   overflow: hidden;

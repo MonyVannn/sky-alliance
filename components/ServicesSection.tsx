@@ -68,7 +68,7 @@ export default function ServicesSection() {
 }
 
 const Features = () => (
-  <div className="relative mx-auto grid h-full w-full max-w-7xl grid-cols-1 gap-8 px-4 md:grid-cols-2">
+  <div className="relative mx-auto grid h-full w-full container grid-cols-1 gap-8 px-4 md:grid-cols-2">
     <Copy />
     <Carousel />
   </div>
