@@ -409,7 +409,7 @@ export default function CareersSection() {
       ref={sectionRef}
       id="careers"
       className="py-24 md:py-36 px-4 sm:px-6 md:px-12"
-      style={{ backgroundColor: "#f9f7f4" }}
+      style={{ backgroundColor: "#f8f4ff" }}
     >
       <div className="container mx-auto">
         {/* ── Job listing two-column layout ─── */}

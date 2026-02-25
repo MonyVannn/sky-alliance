@@ -39,43 +39,53 @@ function SplineBackground() {
 }
 
 const SECTION = {
-  headline: "Sky-high standards.",
+  headline: "Sky-high standard.",
   description:
-    "Sky Alliance is a Dallas-based B2B sales firm built on one core belief: growth happens when people connect. Through personalized, face-to-face representation, we help industry-leading brands grow their customer base while shaping ambitious professionals into the leaders of tomorrow.",
+    "These six principles aren't just words on a wall — they're the standard we hold ourselves to every single day, in every campaign, every conversation, and every decision we make.",
 };
 
 const IMAGES = [
   {
-    id: "integrity",
-    image:
-      "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=900&h=700&fit=crop",
-    headline: "Integrity",
+    id: "entrepreneurial-spirit",
+    image: "/DSC00970.jpg",
+    headline: "Entrepreneurial Spirit",
     description:
-      "We lead with honesty, transparency, and accountability. Whether we're representing a client or developing a team member, trust is the foundation of every decision we make.",
+      "Freedom is the goal, but only after discipline and responsibility. We think like owners, act with urgency, and treat every opportunity as our own.",
   },
   {
-    id: "growth",
-    image:
-      "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=700&h=700&fit=crop",
-    headline: "Growth",
+    id: "solution-oriented",
+    image: "/DSC01818.jpg",
+    headline: "Solution Oriented",
     description:
-      "We believe leadership is learned through action. From day one, we empower our team to take initiative, develop their skills, and step confidently into roles that challenge and elevate them.",
+      "Every problem has a solution and resources to solve it. We don't dwell on obstacles — we move through them with creativity and resolve.",
   },
   {
-    id: "performance",
-    image:
-      "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=700&h=700&fit=crop",
-    headline: "Performance",
+    id: "everything-communicates",
+    image: "/DSC01060.jpg",
+    headline: "Everything Communicates",
     description:
-      "Results matter. We focus on measurable outcomes and sustainable gains that compound over time.",
+      "Clear, honest, and timely communication is fundamental. How we show up, what we say, and how we say it all send a message — we make sure it's the right one.",
   },
   {
-    id: "collaboration",
-    image:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?w=900&h=700&fit=crop",
-    headline: "Collaboration",
+    id: "invest-in-yourself",
+    image: "/DSC02299.jpg",
+    headline: "Invest in Yourself",
     description:
-      "Teamwork fuels our momentum. By supporting each other, sharing knowledge, and aligning our strengths, we create an environment where people and brands thrive together.",
+      "Being passionate about personal growth and development is non-negotiable. The more we invest in ourselves, the more value we bring to our clients and our team.",
+  },
+  {
+    id: "law-of-the-lid",
+    image: "/DSC01844.jpg",
+    headline: "Law of the Lid",
+    description:
+      "No limiting beliefs. If someone can do it, anyone can do it. We refuse to place a ceiling on what's possible for ourselves or the people around us.",
+  },
+  {
+    id: "mental-maturity",
+    image: "/DSC02287.jpg",
+    headline: "Mental Maturity",
+    description:
+      "Be emotional with your feelings but logical with your decisions. We lead with composure, respond with intention, and never let impulse outrun judgment.",
   },
 ];
 
@@ -117,6 +127,7 @@ function ImageCard({ item }: { item: (typeof IMAGES)[number] }) {
           src={item.image}
           alt={item.headline}
           className="w-full h-full object-cover will-change-transform"
+          style={{ objectPosition: "center 25%" }}
         />
       </div>
 
@@ -229,7 +240,7 @@ export default function AboutSection() {
           </motion.p>
         </div>
 
-        {/* 2x2 grid: row1 = 60/40, row2 = 40/60 */}
+        {/* 3x2 grid: rows alternate 60/40 — 40/60 — 60/40 */}
         <div className="grid grid-cols-1 sm:grid-cols-5 gap-4 md:gap-5">
           <div className="sm:col-span-3 h-full">
             <ImageCard item={IMAGES[0]} />
@@ -242,6 +253,12 @@ export default function AboutSection() {
           </div>
           <div className="sm:col-span-3 h-full">
             <ImageCard item={IMAGES[3]} />
+          </div>
+          <div className="sm:col-span-3 h-full">
+            <ImageCard item={IMAGES[4]} />
+          </div>
+          <div className="sm:col-span-2 h-full">
+            <ImageCard item={IMAGES[5]} />
           </div>
         </div>
       </div>
