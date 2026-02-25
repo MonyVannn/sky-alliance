@@ -4,11 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { ScrollSmoother } from "gsap/ScrollSmoother";
-
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -112,10 +107,8 @@ const NavLink = ({ children, href }: { children: string; href: string }) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!href.startsWith("#")) return;
     e.preventDefault();
-    const smoother = ScrollSmoother.get();
-    if (smoother) {
-      smoother.scrollTo(href, true, "top top");
-    }
+    const target = document.querySelector(href);
+    if (target) target.scrollIntoView({ behavior: "smooth" });
   };
 
   return (

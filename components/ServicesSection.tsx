@@ -151,7 +151,7 @@ export default function ServicesSection() {
           ref={stickyRef}
           className="h-dvh overflow-hidden bg-[#fefefe] flex items-center justify-center"
         >
-          <div className="container mx-auto h-2/3 px-6 md:px-12 py-6">
+          <div className="container mx-auto h-[75%] px-6 md:px-12 py-6">
             <div className="grid grid-cols-2 gap-4 md:gap-5 h-full">
               {/* Left: sticky "OUR SERVICES" image card */}
               <div className="relative overflow-hidden">
@@ -214,7 +214,7 @@ export default function ServicesSection() {
                       duration: 0.55,
                       ease: [0.22, 1, 0.36, 1],
                     }}
-                    className="absolute inset-0 flex flex-col justify-center px-10 xl:px-16"
+                    className="absolute inset-0 flex flex-col justify-center px-8 xl:px-12"
                     style={{ backgroundColor: theme.bg }}
                   >
                     {/* Service number */}
@@ -222,7 +222,7 @@ export default function ServicesSection() {
                       className="font-black leading-none block"
                       style={{
                         color: theme.numColor,
-                        fontSize: "clamp(5rem, 13vw, 11rem)",
+                        fontSize: "clamp(3rem, 7vw, 7rem)",
                       }}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
@@ -237,10 +237,10 @@ export default function ServicesSection() {
 
                     {/* Service title */}
                     <motion.h3
-                      className="font-bold uppercase tracking-wide leading-tight mt-5 mb-4"
+                      className="font-bold uppercase tracking-wide leading-tight mt-3 mb-3"
                       style={{
                         color: theme.titleColor,
-                        fontSize: "clamp(1.4rem, 2.6vw, 2.5rem)",
+                        fontSize: "clamp(1.1rem, 1.8vw, 2rem)",
                       }}
                       initial={{ opacity: 0, y: 16 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -255,7 +255,7 @@ export default function ServicesSection() {
 
                     {/* Service description */}
                     <motion.p
-                      className="text-base md:text-lg max-w-base leading-relaxed"
+                      className="text-sm md:text-base max-w-base leading-relaxed"
                       style={{ color: theme.descColor }}
                       initial={{ opacity: 0, y: 12 }}
                       animate={{ opacity: 1, y: 0 }}
