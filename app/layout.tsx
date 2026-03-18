@@ -3,6 +3,7 @@ import { Sora, Geist_Mono, Archivo_Black } from "next/font/google";
 import "./globals.css";
 import { SplineLoadingProvider } from "@/components/SplineLoadingContext";
 import LoadingScreen from "@/components/LoadingScreen";
+import LenisProvider from "@/components/LenisProvider";
 
 const sora = Sora({
   variable: "--font-sora",
@@ -33,12 +34,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sora.variable} ${geistMono.variable} ${archivoBlack.variable} antialiased`}>
-        <SplineLoadingProvider>
-          <LoadingScreen>
-            {children}
-          </LoadingScreen>
-        </SplineLoadingProvider>
+      <body
+        className={`${sora.variable} ${geistMono.variable} ${archivoBlack.variable} antialiased`}
+      >
+        <LenisProvider>
+          <SplineLoadingProvider>
+            <LoadingScreen>{children}</LoadingScreen>
+          </SplineLoadingProvider>
+        </LenisProvider>
       </body>
     </html>
   );

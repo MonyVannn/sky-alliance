@@ -1,9 +1,8 @@
 "use client";
 
-import { useRef, useEffect, Suspense, useState } from "react";
+import { useRef, Suspense, useState } from "react";
 import React from "react";
 import { motion, useInView } from "framer-motion";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import {
   FaLinkedinIn,
@@ -14,37 +13,7 @@ import {
   FaPhone,
   FaLocationDot,
 } from "react-icons/fa6";
-
-const Spline = dynamic(
-  () => import("@splinetool/react-spline").then((mod) => mod.default),
-  { ssr: false },
-);
-
-function SplineBackground() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const checkCanvas = setInterval(() => {
-      if (wrapperRef.current) {
-        const canvas = wrapperRef.current.querySelector("canvas");
-        if (canvas) {
-          canvas.style.background = "transparent";
-          clearInterval(checkCanvas);
-        }
-      }
-    }, 100);
-    return () => clearInterval(checkCanvas);
-  }, []);
-
-  return (
-    <div ref={wrapperRef} className="w-full h-full">
-      <Spline
-        scene="https://prod.spline.design/jjMMrwS3BGTZVcSx/scene.splinecode"
-        className="w-full h-full"
-      />
-    </div>
-  );
-}
+import SplineBackground from "@/components/SplineBackground";
 
 const SOCIALS = [
   {
@@ -73,8 +42,8 @@ const CONTACT_INFO = [
   {
     id: "email",
     label: "Email",
-    value: "info@skyallianceinc.com",
-    href: "mailto:info@skyallianceinc.com",
+    value: "hr@skyallianceinc.com",
+    href: "mailto:hr@skyallianceinc.com",
   },
   {
     id: "phone",
@@ -121,9 +90,7 @@ export default function ContactPage() {
       >
         {/* Spline 3D background */}
         <div className="absolute inset-0 pointer-events-none">
-          <Suspense fallback={null}>
-            <SplineBackground />
-          </Suspense>
+          <SplineBackground scene="https://prod.spline.design/jjMMrwS3BGTZVcSx/scene.splinecode" />
         </div>
 
         <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-12 pb-20 pt-40">

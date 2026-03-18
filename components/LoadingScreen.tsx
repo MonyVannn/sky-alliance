@@ -77,6 +77,11 @@ export default function LoadingScreen({
 
   const rounded = Math.min(100, Math.round(displayProgress));
 
+  // "SKY ALLIANCE" has 11 characters (including space)
+  const text = "SKY ALLIANCE";
+  const visibleCharIndex = Math.floor((rounded / 100) * text.length);
+  const visibleText = text.substring(0, visibleCharIndex);
+
   return (
     <>
       <AnimatePresence mode="wait">
@@ -105,7 +110,7 @@ export default function LoadingScreen({
               className="pointer-events-none absolute -inset-[100%] opacity-[8%]"
             />
 
-            {/* Orange vertical bar — left edge, fills upward */}
+            {/* White vertical bar — left edge, fills upward */}
             <motion.div
               className="absolute left-0 bottom-0 w-[14px]"
               style={{ background: "white" }}
@@ -113,7 +118,7 @@ export default function LoadingScreen({
               transition={{ ease: "linear", duration: 0.1 }}
             />
 
-            {/* Big number — bottom left */}
+            {/* SKY ALLIANCE text — bottom left */}
             <div
               className="absolute bottom-10 left-14 select-none"
               style={{ fontFamily: "var(--font-archivo-black), sans-serif" }}
@@ -121,25 +126,14 @@ export default function LoadingScreen({
               <div className="relative inline-block leading-none">
                 <span
                   style={{
-                    fontSize: "clamp(5rem, 20vw, 18rem)",
+                    fontSize: "clamp(3rem, 15vw, 14rem)",
                     color: "white",
-                    lineHeight: 0.85,
+                    lineHeight: 1.1,
                     display: "block",
+                    minHeight: "1em",
                   }}
                 >
-                  {rounded}
-                </span>
-                <span
-                  className="absolute top-[8%] right-[-1.1em]"
-                  style={{
-                    fontSize: "clamp(1.2rem, 3.5vw, 3.5rem)",
-                    color: "white",
-                    opacity: 0.75,
-                    fontFamily: "var(--font-sora), sans-serif",
-                    fontWeight: 300,
-                  }}
-                >
-                  %
+                  {visibleText}
                 </span>
               </div>
             </div>

@@ -2,17 +2,10 @@
 
 import { useState, useRef, Dispatch, SetStateAction } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import {
-  FiChevronDown,
-  FiChevronUp,
-  FiFileText,
-  FiPhone,
-  FiVideo,
-  FiUserCheck,
-  FiArrowRight,
-} from "react-icons/fi";
+import { FiChevronDown, FiChevronUp, FiArrowRight } from "react-icons/fi";
 import { IconType } from "react-icons";
 import Link from "next/link";
+import Image from "next/image";
 
 // ─── Careers copy ────────────────────────────────────────────────────────────
 
@@ -26,9 +19,9 @@ const LEFT_COPY = {
 };
 
 const JOB = {
-  title: "Territory Sales Manager",
+  title: "Business Development Representative",
   description:
-    "Sky Alliance is a fast-growing B2B sales firm in Dallas specializing in face-to-face marketing and customer acquisition. We partner with major brands to drive revenue, expand market reach, and create long-term customer relationships. We're looking for motivated, outgoing individuals who want to build a career — not just find a job.",
+    "Sky Alliance is a rapidly growing sales and marketing firm specializing in customer acquisition and business development for leading telecommunications clients. Through consultative sales strategies and in-person relationship building, we help companies expand their business customer base while providing our team members with a clear path toward leadership and management. As we continue expanding our Business-to-Business (B2B) campaign in Dallas, we are looking for motivated professionals who are eager to develop their skills in business development, client relationship management, and strategic sales.",
 };
 
 // ─── Accordion ───────────────────────────────────────────────────────────────
@@ -47,8 +40,11 @@ const ACCORDION_ITEMS: AccordionItem[] = [
       <ul className="space-y-2.5 text-sm text-[#444] leading-relaxed">
         {[
           <>
-            Interact with customers <strong>in person</strong> to explain
-            products and drive sales
+            The Business Account Representative will focus on developing
+            relationships with small and medium-sized business owners in the
+            Dallas area. In this role, you will represent our clients, present
+            tailored business solutions, and drive new customer acquisition
+            through professional, consultative sales.
           </>,
           "Build relationships and deliver excellent customer service",
           "Meet weekly performance and sales goals",
@@ -59,7 +55,7 @@ const ACCORDION_ITEMS: AccordionItem[] = [
           "Shadow management to learn hiring, training, and team development processes",
         ].map((item, i) => (
           <li key={i} className="flex gap-3">
-            <span className="mt-[5px] flex-shrink-0 w-1 h-1 rounded-full bg-[#222] block" />
+            <span className="mt-[8px] flex-shrink-0 w-1 h-1 rounded-full bg-[#222] block" />
             <span>{item}</span>
           </li>
         ))}
@@ -78,7 +74,7 @@ const ACCORDION_ITEMS: AccordionItem[] = [
           "No prior sales experience required — we train from the ground up",
         ].map((item, i) => (
           <li key={i} className="flex gap-3">
-            <span className="mt-[5px] flex-shrink-0 w-1 h-1 rounded-full bg-[#222] block" />
+            <span className="mt-[8px] flex-shrink-0 w-1 h-1 rounded-full bg-[#222] block" />
             <span>{item}</span>
           </li>
         ))}
@@ -99,7 +95,7 @@ const ACCORDION_ITEMS: AccordionItem[] = [
           "Weekly team events, workshops, and networking opportunities",
         ].map((item, i) => (
           <li key={i} className="flex gap-3">
-            <span className="mt-[5px] flex-shrink-0 w-1 h-1 rounded-full bg-[#222] block" />
+            <span className="mt-[8px] flex-shrink-0 w-1 h-1 rounded-full bg-[#222] block" />
             <span>{item}</span>
           </li>
         ))}
@@ -170,9 +166,9 @@ const INTERVIEW_STEPS: InterviewStep[] = [
   },
   {
     step: "Step 03",
-    title: "Zoom Interview",
+    title: "Interview",
     description:
-      "A virtual interview with our leadership team where we dive deeper into your goals, strengths, and potential. Come ready to be yourself.",
+      "A physical interview with our leadership team where we dive deeper into your goals, strengths, and potential. Come ready to be yourself.",
   },
   {
     step: "Step 04",
@@ -413,7 +409,20 @@ export default function CareersSection() {
     >
       <div className="container mx-auto">
         {/* ── Job listing two-column layout ─── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 lg:gap-32 md:items-start">
+        <div className="relative grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 lg:gap-32 md:items-start">
+          <motion.div
+            animate={{ y: [0, -20, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -bottom-10 left-20"
+          >
+            <Image
+              src="/square.png"
+              alt="square"
+              width={350}
+              height={350}
+              className="opacity-30"
+            />
+          </motion.div>
           {/* Left Column */}
           <motion.div
             initial={{ opacity: 0, y: 32 }}

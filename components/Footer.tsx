@@ -17,6 +17,7 @@ const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
   { label: "Careers", href: "#careers" },
+  { label: "Team", href: "/team" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -110,19 +111,6 @@ export default function Footer() {
               ))}
             </div>
 
-            {/* Email */}
-            <div className="flex flex-col gap-3">
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#ffa726] mb-1">
-                Email
-              </span>
-              <a
-                href="mailto:info@skyallianceinc.com"
-                className="text-sm text-white/60 hover:text-white transition-colors duration-150 break-all"
-              >
-                info@skyallianceinc.com
-              </a>
-            </div>
-
             {/* Address */}
             <div className="flex flex-col gap-3">
               <span className="text-xs font-semibold uppercase tracking-widest text-[#ffa726] mb-1">
@@ -136,8 +124,14 @@ export default function Footer() {
             {/* Phone */}
             <div className="flex flex-col gap-3">
               <span className="text-xs font-semibold uppercase tracking-widest text-[#ffa726] mb-1">
-                Phone
+                Contact
               </span>
+              <a
+                href="mailto:hr@skyallianceinc.com"
+                className="text-sm text-white/60 hover:text-white transition-colors duration-150 break-all whitespace-nowrap"
+              >
+                hr@skyallianceinc.com
+              </a>
               <a
                 href="tel:+19452950020"
                 className="text-sm text-white/60 hover:text-white transition-colors duration-150"

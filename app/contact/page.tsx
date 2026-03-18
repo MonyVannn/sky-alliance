@@ -12,7 +12,7 @@ export default function Contact() {
   return (
     <>
       <Navigation />
-      <main className="min-h-screen bg-white">
+      <main className="min-h-screen bg-[#f8f4ff]">
         <ContactPage />
       </main>
       <Footer />

@@ -121,10 +121,10 @@ export default function Hero() {
       />
 
       {/* Spline 3D Object - Right Side */}
-      <div className="absolute top-0 right-0 w-2/3 h-full z-[5] pointer-events-none hidden md:block origin-top-right md:scale-[0.55] lg:scale-[0.75] xl:scale-[0.9] 2xl:scale-100">
+      <div className="absolute lg:top-0 lg:right-0 w-2/3 h-full z-5 pointer-events-none hidden lg:block origin-top-right md:scale-[0.55] lg:scale-[0.75] xl:scale-[0.9] 2xl:scale-100">
         <div className="relative w-full h-full">
           <Suspense fallback={null}>
-            <SplineWrapper scene="https://prod.spline.design/90e2VVgs3MwvP52T/scene.splinecode" />
+            <SplineWrapper scene="https://prod.spline.design/597kYmcYy-7Th-yE/scene.splinecode" />
           </Suspense>
         </div>
       </div>
@@ -144,7 +144,7 @@ export default function Hero() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="text-sm font-medium mb-4 tracking-wide uppercase bg-white/30 backdrop-blur-md w-fit p-2 shadow-sm"
           >
-            Business Consulting and Services
+            Disclaimer: This is not an airline.
           </motion.p>
 
           {/* Main Headline */}
@@ -156,7 +156,7 @@ export default function Hero() {
           >
             <span className="block">Beyond the sky.</span>
             <span className="block mt-2 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light italic">
-              Transform for growth.
+              Above the limit.
             </span>
           </motion.h1>
 
