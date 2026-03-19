@@ -130,7 +130,7 @@ export default function Hero() {
       </div>
 
       {/* Content Layer */}
-      <div className="relative z-10 w-full container mx-auto px-4 sm:px-6 md:px-12 pt-24 md:pt-32 pb-20 sm:pb-32">
+      <div className="relative z-10 w-full container mx-auto px-4 sm:px-6 md:px-12 pt-24 xl:pt-48 md:pt-32 pb-20 sm:pb-32">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -144,7 +144,7 @@ export default function Hero() {
             transition={{ delay: 0.2, duration: 0.6 }}
             className="text-sm font-medium mb-4 tracking-wide uppercase bg-white/30 backdrop-blur-md w-fit p-2 shadow-sm"
           >
-            Disclaimer: This is not an airline.
+            Business and Consulting
           </motion.p>
 
           {/* Main Headline */}

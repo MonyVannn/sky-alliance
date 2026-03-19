@@ -93,7 +93,7 @@ export default function ContactPage() {
           <SplineBackground scene="https://prod.spline.design/jjMMrwS3BGTZVcSx/scene.splinecode" />
         </div>
 
-        <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-12 pb-20 pt-40">
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 md:px-12 pb-20 pt-40 mix-blend-difference">
           <motion.h1
             ref={headlineRef}
             className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[96px] font-bold text-[#fafafa] leading-[0.95] tracking-tight uppercase"

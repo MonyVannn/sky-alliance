@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import StaggeredMenu from "./MobileNav";
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import {
@@ -11,13 +12,25 @@ import {
   AnimatePresence,
 } from "framer-motion";
 
+const menuItems = [
+  { label: "Home", ariaLabel: "Go to home page", link: "/" },
+  { label: "Team", ariaLabel: "View our team", link: "/team" },
+  { label: "Contact", ariaLabel: "Get in touch", link: "/contact" },
+];
+
+const socialItems = [
+  { label: "Twitter", link: "https://x.com/SkyAllianceTX" },
+  { label: "LinkedIn", link: "https://linkedin.com/company/skyalliancetx" },
+  { label: "Instagram", link: "https://instagram.com/skyalliancetx" },
+];
+
 export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const { scrollYProgress } = useScroll();
 
   // Check if we're on a dark background page (contact page)
-  const isDarkPage = pathname === "/contact";
+  const isDarkPage = pathname === "/contact" || pathname === "/team";
 
   const backdropBlur = useTransform(
     scrollYProgress,
@@ -66,58 +79,21 @@ export default function Navigation() {
           <JoinButton isDarkPage={isDarkPage} />
         </div>
 
-        {/* Hamburger button */}
-        <button
-          className="lg:hidden flex flex-col justify-center gap-[5px] p-2 cursor-pointer"
-          onClick={() => setMenuOpen((prev) => !prev)}
-          aria-label="Toggle menu"
-        >
-          <motion.span
-            animate={menuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.25 }}
-            className={`block w-6 h-[2px] ${isDarkPage ? "bg-white" : "bg-[#171717]"} origin-center`}
+        <div className="lg:hidden flex items-center">
+          <StaggeredMenu
+            position="right"
+            items={menuItems}
+            socialItems={socialItems}
+            displaySocials
+            displayItemNumbering
+            menuButtonColor={isDarkPage ? "#ffffff" : "#171717"}
+            openMenuButtonColor="#171717"
+            changeMenuColorOnOpen
+            colors={["#B19EEF", "#5227FF"]}
+            accentColor="#5227FF"
           />
-          <motion.span
-            animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-            transition={{ duration: 0.15 }}
-            className={`block w-6 h-[2px] ${isDarkPage ? "bg-white" : "bg-[#171717]"}`}
-          />
-          <motion.span
-            animate={menuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
-            transition={{ duration: 0.25 }}
-            className={`block w-6 h-[2px] ${isDarkPage ? "bg-white" : "bg-[#171717]"} origin-center`}
-          />
-        </button>
+        </div>
       </div>
-
-      {/* Mobile dropdown */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="lg:hidden bg-white/95 backdrop-blur-md border-t border-neutral-100 shadow-lg"
-          >
-            <MobileNavLink href="/" onClick={() => setMenuOpen(false)}>
-              Home
-            </MobileNavLink>
-            <MobileNavLink href="#about" onClick={() => setMenuOpen(false)}>
-              About
-            </MobileNavLink>
-            <MobileNavLink href="#services" onClick={() => setMenuOpen(false)}>
-              Services
-            </MobileNavLink>
-            <MobileNavLink href="#careers" onClick={() => setMenuOpen(false)}>
-              Careers
-            </MobileNavLink>
-            <div className="px-4 py-4">
-              <JoinButton isDarkPage={isDarkPage} />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.nav>
   );
 }
@@ -130,7 +106,7 @@ const Logo = ({ isDarkPage }: { isDarkPage: boolean }) => {
         alt="Sky Alliance"
         width={500}
         height={500}
-        className={`h-8 md:h-20 w-auto`}
+        className={`h-10 md:h-20 w-auto`}
         priority
       />
     </Link>
@@ -193,7 +169,7 @@ const JoinButton = ({ isDarkPage }: { isDarkPage: boolean }) => {
     <Link href="/contact">
       <button
         className={`
-          relative z-0 flex items-center gap-2 overflow-hidden whitespace-nowrap rounded-lg border-[1px] 
+          relative z-0 flex items-center gap-2 overflow-hidden whitespace-nowrap border-[1px] 
           ${isDarkPage ? "border-white text-white" : "border-neutral-600 text-[#171717]"}
           px-4 py-1.5 font-medium cursor-pointer transition-all duration-300
           
@@ -208,7 +184,7 @@ const JoinButton = ({ isDarkPage }: { isDarkPage: boolean }) => {
           hover:before:translate-y-[0%]
           active:scale-100`}
       >
-        Talk to us
+        Contact Us
       </button>
     </Link>
   );
