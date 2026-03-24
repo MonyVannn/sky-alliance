@@ -10,6 +10,7 @@ import {
   FaXTwitter,
   FaFacebookF,
 } from "react-icons/fa6";
+import { ScreenFitText } from "@/components/ScreenFitText";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -72,7 +73,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="bg-[#4a148c] text-white">
+    <footer className="bg-[#4a148c] text-white overflow-x-hidden min-w-0">
       {/* Top section */}
       <div className="max-w-screen-xl mx-auto px-4 sm:px-8 lg:px-12 pt-20 pb-16">
         <div className="flex flex-col lg:flex-row justify-between gap-16">
@@ -146,17 +147,15 @@ export default function Footer() {
       {/* Divider */}
       <div className="border-t border-white/10" />
 
-      {/* Giant brand text */}
-      <div className="overflow-hidden px-4 pt-4 pb-0">
-        <div
-          ref={bigTextRef}
-          className="font-black leading-none tracking-tight whitespace-nowrap text-center select-none"
-          style={{
-            fontFamily: "var(--font-archivo-black)",
-            fontSize: "clamp(3.5rem, 12.5vw, 17rem)",
-          }}
-        >
-          SKY ALLIANCE
+      {/* Giant brand text — font size computed to fit container width */}
+      <div className="min-w-0 w-full max-w-full overflow-hidden px-4 pt-4 pb-0">
+        <div ref={bigTextRef} className="min-w-0 w-full max-w-full">
+          <ScreenFitText
+            textClassName="font-black leading-none tracking-tight select-none"
+            style={{ fontFamily: "var(--font-archivo-black)" }}
+          >
+            SKY ALLIANCE
+          </ScreenFitText>
         </div>
       </div>
 

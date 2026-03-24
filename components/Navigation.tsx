@@ -15,6 +15,7 @@ import {
 const menuItems = [
   { label: "Home", ariaLabel: "Go to home page", link: "/" },
   { label: "Team", ariaLabel: "View our team", link: "/team" },
+  { label: "Careers", ariaLabel: "View our careers", link: "/career" },
   { label: "Contact", ariaLabel: "Get in touch", link: "/contact" },
 ];
 
@@ -29,8 +30,9 @@ export default function Navigation() {
   const pathname = usePathname();
   const { scrollYProgress } = useScroll();
 
-  // Check if we're on a dark background page (contact page)
-  const isDarkPage = pathname === "/contact" || pathname === "/team";
+  // Check if we're on a dark background page
+  const isDarkPage =
+    pathname === "/contact" || pathname === "/team" || pathname === "/career" || pathname.startsWith("/career/");
 
   const backdropBlur = useTransform(
     scrollYProgress,
@@ -70,7 +72,7 @@ export default function Navigation() {
           <NavLink href="#services" isDarkPage={isDarkPage}>
             Services
           </NavLink>
-          <NavLink href="#careers" isDarkPage={isDarkPage}>
+          <NavLink href="/career" isDarkPage={isDarkPage}>
             Careers
           </NavLink>
           <NavLink href="/team" isDarkPage={isDarkPage}>
@@ -186,26 +188,6 @@ const JoinButton = ({ isDarkPage }: { isDarkPage: boolean }) => {
       >
         Contact Us
       </button>
-    </Link>
-  );
-};
-
-const MobileNavLink = ({
-  children,
-  href,
-  onClick,
-}: {
-  children: string;
-  href: string;
-  onClick: () => void;
-}) => {
-  return (
-    <Link
-      href={href}
-      onClick={onClick}
-      className="block px-4 py-3 text-neutral-600 hover:bg-neutral-100 hover:text-foreground transition-colors border-b border-neutral-200 last:border-b-0"
-    >
-      {children}
     </Link>
   );
 };
