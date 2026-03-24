@@ -377,13 +377,11 @@ function InterviewProcess({ isInView }: { isInView: boolean }) {
       {/* Online Application CTA */}
       <div className="mt-16 md:mt-20 flex justify-center">
         <Link
-          href="https://www.careerlisterapp.com/postings/form/1144037418"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/career/application"
           className="group inline-flex items-center gap-3 border border-[#171717] px-7 py-3.5 text-sm font-medium text-[#171717] tracking-wide hover:bg-[#171717] hover:text-white transition-all duration-300"
           style={{ fontFamily: "var(--font-sora), sans-serif" }}
         >
-          Online Application
+          Apply Now
           <FiArrowRight
             size={14}
             className="transition-transform duration-300 group-hover:translate-x-1"
