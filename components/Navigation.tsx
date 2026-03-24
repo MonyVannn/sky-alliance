@@ -32,7 +32,10 @@ export default function Navigation() {
 
   // Check if we're on a dark background page
   const isDarkPage =
-    pathname === "/contact" || pathname === "/team" || pathname === "/career" || pathname.startsWith("/career/");
+    pathname === "/contact" ||
+    pathname === "/team" ||
+    pathname === "/career" ||
+    pathname.startsWith("/career/");
 
   const backdropBlur = useTransform(
     scrollYProgress,
@@ -68,9 +71,6 @@ export default function Navigation() {
           </NavLink>
           <NavLink href="#about" isDarkPage={isDarkPage}>
             About
-          </NavLink>
-          <NavLink href="#services" isDarkPage={isDarkPage}>
-            Services
           </NavLink>
           <NavLink href="/career" isDarkPage={isDarkPage}>
             Careers

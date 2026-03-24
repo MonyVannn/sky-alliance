@@ -102,7 +102,7 @@ export default function CareerHero() {
           }}
         >
           Discover exciting career opportunities and become part of a
-          forward-thinking team. We're always looking for passionate individuals
+          forward-thinking team. We&apos;re always looking for passionate individuals
           ready to make an impact.
         </motion.p>
       </div>

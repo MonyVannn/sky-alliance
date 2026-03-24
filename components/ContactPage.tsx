@@ -138,7 +138,7 @@ export default function ContactPage() {
             }}
           >
             Whether you have a question, an opportunity, or just want to say
-            hello — drop us a line and we'll get back to you as soon as
+            hello — drop us a line and we&apos;ll get back to you as soon as
             possible.
           </motion.p>
         </div>
@@ -167,7 +167,7 @@ export default function ContactPage() {
                   className="mt-3 text-3xl sm:text-4xl font-bold text-[#171717] leading-tight"
                   style={{ fontFamily: "var(--font-sora), sans-serif" }}
                 >
-                  Let's start a<br />
+                  Let&apos;s start a<br />
                   <span style={{ color: "#4a148c" }}>conversation.</span>
                 </h2>
                 <p className="mt-4 text-sm text-neutral-500 leading-relaxed max-w-xs">

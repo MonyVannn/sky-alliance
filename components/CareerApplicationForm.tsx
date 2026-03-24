@@ -1,9 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useActionState, useEffect } from "react";
 import React from "react";
+import { submitCareerApplication } from "@/app/career/application/actions";
 
 export default function CareerApplicationForm() {
+  const [state, formAction, isPending] = useActionState(submitCareerApplication, {
+    status: "idle",
+  });
+
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -20,10 +25,29 @@ export default function CareerApplicationForm() {
     zip: "",
   });
   const [file, setFile] = useState<File | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<
-    "idle" | "success" | "error"
-  >("idle");
+
+  useEffect(() => {
+    if (state.status === "success") {
+      setTimeout(() => {
+        setForm({
+          firstName: "",
+          lastName: "",
+          mobile: "",
+          phone: "",
+          optInSms: true,
+          email: "",
+          socialProfile: "",
+          university: "",
+          address1: "",
+          address2: "",
+          city: "",
+          state: "Alabama",
+          zip: "",
+        });
+        setFile(null);
+      }, 0);
+    }
+  }, [state.status]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -47,53 +71,8 @@ export default function CareerApplicationForm() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus("idle");
-
-    try {
-      const formData = new FormData();
-      Object.entries(form).forEach(([key, value]) => {
-        formData.append(key, value.toString());
-      });
-      if (file) {
-        formData.append("resume", file);
-      }
-
-      const res = await fetch("/api/career-application", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) throw new Error("Submission failed");
-
-      setSubmitStatus("success");
-      setForm({
-        firstName: "",
-        lastName: "",
-        mobile: "",
-        phone: "",
-        optInSms: true,
-        email: "",
-        socialProfile: "",
-        university: "",
-        address1: "",
-        address2: "",
-        city: "",
-        state: "Alabama",
-        zip: "",
-      });
-      setFile(null);
-    } catch (err) {
-      setSubmitStatus("error");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+    <form action={formAction} className="flex flex-col gap-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="flex flex-col gap-1.5">
           <label
@@ -396,6 +375,7 @@ export default function CareerApplicationForm() {
         <div className="relative w-full rounded-lg border-2 border-dashed border-neutral-300 bg-neutral-50 px-4 py-6 text-center hover:bg-neutral-100 transition-colors duration-200">
           <input
             type="file"
+            name="resume"
             accept=".pdf,.doc,.docx"
             onChange={handleFileChange}
             required
@@ -414,20 +394,21 @@ export default function CareerApplicationForm() {
         </div>
       </div>
 
-      {submitStatus === "success" && (
+      {state.status === "success" && (
         <p className="text-sm text-green-600 bg-green-50 p-3 rounded-lg">
-          Application submitted successfully! We'll be in touch soon.
+          Application submitted successfully! We&apos;ll be in touch soon.
         </p>
       )}
-      {submitStatus === "error" && (
-        <p className="text-sm text-red-600 bg-red-50 p-3 rounded-lg">
-          There was an error submitting your application. Please try again.
-        </p>
+      {state.status === "error" && (
+        <div className="text-sm text-red-600 bg-red-50 p-3 rounded-lg">
+          <p>There was an error submitting your application. Please try again.</p>
+          {state.message && <p className="mt-1 font-medium">{state.message}</p>}
+        </div>
       )}
 
       <button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isPending}
         className="
         mt-2 w-full relative z-0 flex items-center justify-center gap-2 overflow-hidden whitespace-nowrap rounded-lg border border-neutral-700
         px-7 py-3 text-sm font-semibold text-[#171717] cursor-pointer transition-all duration-300
@@ -437,7 +418,7 @@ export default function CareerApplicationForm() {
         active:scale-100 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:text-[#171717] disabled:hover:border-neutral-700 disabled:before:hidden
       "
       >
-        {isSubmitting ? "Submitting..." : "Submit Application"}
+        {isPending ? "Submitting..." : "Submit Application"}
       </button>
     </form>
   );

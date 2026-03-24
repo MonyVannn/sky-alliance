@@ -33,11 +33,6 @@ export default function CareerApplicationPage() {
                   >
                     {JOB_DETAILS.title}
                   </h2>
-                  {JOB_DETAILS.subtitle ? (
-                    <p className="mt-1 text-base text-neutral-600 font-medium">
-                      {JOB_DETAILS.subtitle}
-                    </p>
-                  ) : null}
                   {JOB_DETAILS.metaLine ? (
                     <p className="mt-1 text-sm text-neutral-500">
                       {JOB_DETAILS.metaLine}

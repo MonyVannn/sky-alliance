@@ -1,18 +1,30 @@
-import { NextResponse } from "next/server";
+"use server";
+
 import { Resend } from "resend";
 
-// Ensure you have RESEND_API_KEY set in your environment variables.
-const resend = new Resend(process.env.RESEND_API_KEY || "re_123456789");
+export type ApplicationState = {
+  status: "idle" | "success" | "error";
+  message?: string;
+};
 
-export async function POST(req: Request) {
+export async function submitCareerApplication(
+  prevState: ApplicationState,
+  formData: FormData
+): Promise<ApplicationState> {
   try {
-    const formData = await req.formData();
-    
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.error("Missing RESEND_API_KEY environment variable");
+      return { status: "error", message: "Server configuration error" };
+    }
+
+    const resend = new Resend(apiKey);
+
     const firstName = formData.get("firstName") as string;
     const lastName = formData.get("lastName") as string;
     const mobile = formData.get("mobile") as string;
     const phone = formData.get("phone") as string;
-    const optInSms = formData.get("optInSms") === "true";
+    const optInSms = formData.get("optInSms") === "on" || formData.get("optInSms") === "true";
     const email = formData.get("email") as string;
     const socialProfile = formData.get("socialProfile") as string;
     const university = formData.get("university") as string;
@@ -24,14 +36,11 @@ export async function POST(req: Request) {
     const resume = formData.get("resume") as File | null;
 
     if (!firstName || !lastName || !mobile || !phone || !email) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
+      return { status: "error", message: "Missing required fields" };
     }
 
-    let attachments = [];
-    if (resume) {
+    const attachments = [];
+    if (resume && resume.size > 0) {
       const buffer = await resume.arrayBuffer();
       attachments.push({
         filename: resume.name,
@@ -39,9 +48,17 @@ export async function POST(req: Request) {
       });
     }
 
-    const { data, error } = await resend.emails.send({
-      from: "Sky Alliance Careers <onboarding@resend.dev>", // Update to verified domain e.g. careers@skyallianceinc.com in prod
-      to: process.env.CAREER_APPLICATION_TO || "hr@skyallianceinc.com",
+    const fromEmail = process.env.RESEND_FROM;
+    if (!fromEmail) {
+      console.error("Missing RESEND_FROM environment variable");
+      return { status: "error", message: "Server configuration error" };
+    }
+
+    const toEmail = process.env.CAREER_APPLICATION_TO || "hr@skyallianceinc.com";
+
+    const { error } = await resend.emails.send({
+      from: fromEmail,
+      to: toEmail,
       subject: `New Job Application: ${firstName} ${lastName}`,
       text: `
 New application received.
@@ -66,15 +83,12 @@ ${resume ? "Resume is attached." : "No resume attached."}
 
     if (error) {
       console.error("Resend API Error:", error);
-      return NextResponse.json({ error: error.message }, { status: 500 });
+      return { status: "error", message: error.message };
     }
 
-    return NextResponse.json({ success: true, data }, { status: 200 });
+    return { status: "success" };
   } catch (error) {
     console.error("Career application error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    return { status: "error", message: "Internal server error" };
   }
 }
