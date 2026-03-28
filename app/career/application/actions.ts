@@ -2,6 +2,10 @@
 
 import { Resend } from "resend";
 
+/** Published Resend template "Application Received Automatic Reply" — overridable via env. */
+const DEFAULT_APPLICATION_RECEIVED_TEMPLATE_ID =
+  "e6c4019b-e324-49a3-88fe-b6a9947f20a3";
+
 export type ApplicationState = {
   status: "idle" | "success" | "error";
   message?: string;
@@ -84,6 +88,29 @@ ${resume ? "Resume is attached." : "No resume attached."}
     if (error) {
       console.error("Resend API Error:", error);
       return { status: "error", message: error.message };
+    }
+
+    const templateId =
+      process.env.RESEND_APPLICATION_RECEIVED_TEMPLATE_ID ??
+      DEFAULT_APPLICATION_RECEIVED_TEMPLATE_ID;
+
+    const { error: autoReplyError } = await resend.emails.send({
+      from: fromEmail,
+      to: email,
+      replyTo: toEmail,
+      template: {
+        id: templateId,
+        variables: {
+          firstname: firstName,
+        },
+      },
+    });
+
+    if (autoReplyError) {
+      console.error(
+        "Resend API Error (application auto-reply):",
+        autoReplyError,
+      );
     }
 
     return { status: "success" };
