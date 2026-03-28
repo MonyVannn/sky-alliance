@@ -4,6 +4,7 @@ import "./globals.css";
 import { SplineLoadingProvider } from "@/components/SplineLoadingContext";
 import LoadingScreen from "@/components/LoadingScreen";
 import LenisProvider from "@/components/LenisProvider";
+import { Analytics } from "@vercel/analytics/react";
 
 const sora = Sora({
   variable: "--font-sora",
@@ -42,6 +43,7 @@ export default function RootLayout({
             <LoadingScreen>{children}</LoadingScreen>
           </SplineLoadingProvider>
         </LenisProvider>
+        <Analytics />
       </body>
     </html>
   );
