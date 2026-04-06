@@ -1,113 +1,117 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { KeyboardEvent, useState } from "react";
+import { AnimatePresence, motion, PanInfo } from "framer-motion";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 
 type GalleryImage = {
   id: string;
   src: string;
   alt: string;
-  desktopPositionClassName: string;
-  mobileMinHeightClassName: string;
-  sizes: string;
 };
+
+const CAROUSEL_IMAGE_SIZES =
+  "(max-width: 640px) 100vw, (max-width: 1024px) 92vw, 960px";
+const SWIPE_OFFSET_THRESHOLD = 80;
+const SWIPE_VELOCITY_THRESHOLD = 500;
 
 const TEAM_NIGHT_IMAGES: GalleryImage[] = [
   {
-    id: "top",
+    id: "team-8",
     src: "/team-night/team8.jpg",
     alt: "Team night moment with the crew",
-    desktopPositionClassName:
-      "md:-top-10 md:right-[16%] md:h-[150px] md:w-[150px] lg:-top-16 lg:right-[20%] lg:h-[200px] lg:w-[200px] border-6 border-[#f8f4ff]",
-    mobileMinHeightClassName: "min-h-[250px]",
-    sizes: "(max-width: 767px) 100vw, 25vw",
   },
   {
-    id: "top-left",
+    id: "team-1",
     src: "/team-night/team1.jpg",
     alt: "Team night moment with the crew",
-    desktopPositionClassName:
-      "md:top-[20px] md:left-[3%] md:h-[220px] md:w-[20%] lg:top-0 lg:left-[8%] lg:h-[280px] lg:w-[16%] border-6 border-[#f8f4ff]",
-    mobileMinHeightClassName: "min-h-[250px]",
-    sizes: "(max-width: 767px) 100vw, 25vw",
   },
   {
-    id: "top-right",
+    id: "team-2",
     src: "/team-night/team2.jpg",
     alt: "Crew night group photo",
-    desktopPositionClassName:
-      "md:-top-8 md:left-[30%] md:h-[150px] md:w-[30%] lg:-top-16 lg:left-[32%] lg:h-[200px] lg:w-[24%] border-6 border-[#f8f4ff]",
-    mobileMinHeightClassName: "min-h-[220px]",
-    sizes: "(max-width: 767px) 100vw, 45vw",
   },
   {
-    id: "middle-left",
+    id: "team-3",
     src: "/team-night/team3.jpg",
     alt: "Sky Alliance team sharing laughs during team night",
-    desktopPositionClassName:
-      "md:top-[250px] md:left-[3%] md:h-[170px] md:w-[20%] lg:top-[380px] lg:left-[8%] lg:h-[190px] lg:w-[16%] border-6 border-[#f8f4ff]",
-    mobileMinHeightClassName: "min-h-[210px]",
-    sizes: "(max-width: 767px) 100vw, 25vw",
   },
   {
-    id: "center",
+    id: "team-5",
     src: "/team-night/team5.jpg",
     alt: "Team night highlight with the full crew",
-    desktopPositionClassName:
-      "md:top-[190px] md:left-1/2 md:h-[330px] md:w-[56%] md:-translate-x-1/2 lg:top-[165px] lg:h-[360px] lg:w-[46%] border-6 border-[#f8f4ff]",
-    mobileMinHeightClassName: "min-h-[280px]",
-    sizes: "(max-width: 767px) 100vw, 50vw",
   },
   {
-    id: "middle-right",
+    id: "team-4",
     src: "/team-night/team4.jpg",
     alt: "Crew night candid at Sky Alliance",
-    desktopPositionClassName:
-      "md:top-[260px] md:right-[3%] md:h-[190px] md:w-[20%] lg:top-[210px] lg:right-[6%] lg:h-[240px] lg:w-[16%] border-6 border-[#f8f4ff]",
-    mobileMinHeightClassName: "min-h-[210px]",
-    sizes: "(max-width: 767px) 100vw, 25vw",
   },
   {
-    id: "bottom-left",
+    id: "team-6",
     src: "/team-night/team6.jpg",
     alt: "Another weekly team night memory",
-    desktopPositionClassName:
-      "md:bottom-[8px] md:left-[28%] md:h-[150px] md:w-[20%] lg:-bottom-10 lg:left-[30%] lg:h-[170px] lg:w-[17%] border-6 border-[#f8f4ff]",
-    mobileMinHeightClassName: "min-h-[210px]",
-    sizes: "(max-width: 767px) 100vw, 25vw",
   },
   {
-    id: "bottom-right",
+    id: "team-7",
     src: "/team-night/team7.jpg",
     alt: "Crew celebrating another productive week",
-    desktopPositionClassName:
-      "md:-bottom-8 md:right-[8%] md:h-[180px] md:w-[40%] lg:-bottom-20 lg:right-[18%] lg:h-[225px] lg:w-[28%] border-6 border-[#f8f4ff]",
-    mobileMinHeightClassName: "min-h-[220px]",
-    sizes: "(max-width: 767px) 100vw, 45vw",
   },
 ];
 
-function MobileGalleryTile({ image }: { image: GalleryImage }) {
-  return (
-    <div
-      className={`relative overflow-hidden ${image.mobileMinHeightClassName}`}
-    >
-      <Image
-        src={image.src}
-        alt={image.alt}
-        fill
-        sizes={image.sizes}
-        className="object-cover"
-      />
-    </div>
-  );
-}
-
 export default function TeamNightGallery() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const totalSlides = TEAM_NIGHT_IMAGES.length;
+  const currentSlide = TEAM_NIGHT_IMAGES[currentIndex];
+
+  const goToSlide = (nextIndex: number, nextDirection: 1 | -1) => {
+    setDirection(nextDirection);
+    setCurrentIndex((nextIndex + totalSlides) % totalSlides);
+  };
+
+  const goToNextSlide = () => {
+    goToSlide(currentIndex + 1, 1);
+  };
+
+  const goToPreviousSlide = () => {
+    goToSlide(currentIndex - 1, -1);
+  };
+
+  const handleDragEnd = (
+    _event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo,
+  ) => {
+    const didSwipeLeft =
+      info.offset.x <= -SWIPE_OFFSET_THRESHOLD ||
+      info.velocity.x <= -SWIPE_VELOCITY_THRESHOLD;
+    const didSwipeRight =
+      info.offset.x >= SWIPE_OFFSET_THRESHOLD ||
+      info.velocity.x >= SWIPE_VELOCITY_THRESHOLD;
+
+    if (didSwipeLeft) {
+      goToNextSlide();
+    } else if (didSwipeRight) {
+      goToPreviousSlide();
+    }
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      goToNextSlide();
+    }
+
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      goToPreviousSlide();
+    }
+  };
+
   return (
     <section
       id="team-night"
-      className="relative overflow-hidden py-20 md:py-44 px-4 sm:px-6"
+      className="relative overflow-hidden py-20 md:py-32 px-4 sm:px-6"
       style={{ backgroundColor: "#0d0d0d" }}
     >
       <div
@@ -195,27 +199,79 @@ export default function TeamNightGallery() {
           </p>
         </div>
 
-        <div className="grid grid-cols-2 grid-rows-4 gap-4 md:grid-cols-4 md:grid-rows-2 lg:hidden">
-          {TEAM_NIGHT_IMAGES.map((image) => (
-            <MobileGalleryTile key={`${image.id}-mobile`} image={image} />
-          ))}
-        </div>
+        <div
+          className="relative"
+          role="region"
+          aria-roledescription="carousel"
+          aria-label="Team night photo carousel"
+          tabIndex={0}
+          onKeyDown={handleKeyDown}
+        >
+          <p className="sr-only" aria-live="polite">
+            Slide {currentIndex + 1} of {totalSlides}
+          </p>
 
-        <div className="relative hidden lg:block h-[700px] xl:h-[740px]">
-          {TEAM_NIGHT_IMAGES.map((image) => (
-            <div
-              key={image.id}
-              className={`absolute overflow-hidden ${image.desktopPositionClassName}`}
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                sizes={image.sizes}
-                className="object-cover"
-              />
-            </div>
-          ))}
+          <div className="relative overflow-hidden  bg-black/30 min-h-[340px] sm:min-h-[500px] lg:min-h-[680px] xl:min-h-[740px]">
+            <AnimatePresence initial={false} custom={direction} mode="wait">
+              <motion.div
+                key={currentSlide.id}
+                custom={direction}
+                variants={{
+                  enter: (currentDirection: number) => ({
+                    x: currentDirection > 0 ? 100 : -100,
+                    opacity: 0,
+                  }),
+                  center: { x: 0, opacity: 1 },
+                  exit: (currentDirection: number) => ({
+                    x: currentDirection > 0 ? -100 : 100,
+                    opacity: 0,
+                  }),
+                }}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.15}
+                onDragEnd={handleDragEnd}
+                className="absolute inset-0 cursor-grab active:cursor-grabbing"
+              >
+                <Image
+                  src={currentSlide.src}
+                  alt={currentSlide.alt}
+                  fill
+                  sizes={CAROUSEL_IMAGE_SIZES}
+                  className="object-cover object-center"
+                  priority={currentIndex === 0}
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
+          <button
+            type="button"
+            onClick={goToPreviousSlide}
+            aria-label="Show previous team night photo"
+            className="cursor-pointer absolute left-3 top-1/2 -translate-y-1/2 h-11 w-11 rounded-full border border-[#f8f4ff]/50 bg-[#0d0d0d]/70 text-[#f8f4ff] transition hover:bg-[#0d0d0d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f8f4ff] sm:left-5"
+          >
+            <FiChevronLeft className="mx-auto h-6 w-6" />
+          </button>
+
+          <button
+            type="button"
+            onClick={goToNextSlide}
+            aria-label="Show next team night photo"
+            className="cursor-pointer absolute right-3 top-1/2 -translate-y-1/2 h-11 w-11 rounded-full border border-[#f8f4ff]/50 bg-[#0d0d0d]/70 text-[#f8f4ff] transition hover:bg-[#0d0d0d] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f8f4ff] sm:right-5"
+          >
+            <FiChevronRight className="mx-auto h-6 w-6" />
+          </button>
+
+          <div className="mt-4 flex items-center justify-center">
+            <span className="text-xs sm:text-sm tracking-wide text-[#d6d6d6]">
+              {currentIndex + 1} / {totalSlides}
+            </span>
+          </div>
         </div>
       </div>
     </section>
