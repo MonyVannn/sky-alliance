@@ -19,42 +19,42 @@ const SWIPE_VELOCITY_THRESHOLD = 500;
 const TEAM_NIGHT_IMAGES: GalleryImage[] = [
   {
     id: "team-8",
-    src: "/team-night/t8.jpg",
+    src: "/team-night/8.jpg",
     alt: "Team night moment with the crew",
   },
   {
     id: "team-1",
-    src: "/team-night/t2.jpg",
+    src: "/team-night/2.jpg",
     alt: "Team night moment with the crew",
   },
   {
     id: "team-2",
-    src: "/team-night/t3.jpg",
+    src: "/team-night/3.jpg",
     alt: "Crew night group photo",
   },
   {
     id: "team-3",
-    src: "/team-night/t4.jpg",
+    src: "/team-night/4.jpg",
     alt: "Sky Alliance team sharing laughs during team night",
   },
   {
     id: "team-5",
-    src: "/team-night/t1.jpg",
+    src: "/team-night/1.jpg",
     alt: "Team night highlight with the full crew",
   },
   {
     id: "team-4",
-    src: "/team-night/t6.jpg",
+    src: "/team-night/6.jpg",
     alt: "Crew night candid at Sky Alliance",
   },
   {
     id: "team-6",
-    src: "/team-night/t7.png",
+    src: "/team-night/7.png",
     alt: "Another weekly team night memory",
   },
   {
     id: "team-8",
-    src: "/team-night/t5.jpg",
+    src: "/team-night/5.jpg",
     alt: "Another weekly team night memory",
   },
 ];
