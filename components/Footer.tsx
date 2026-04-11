@@ -15,9 +15,8 @@ import { ScreenFitText } from "@/components/ScreenFitText";
 gsap.registerPlugin(ScrollTrigger);
 
 const NAV_LINKS = [
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Careers", href: "#careers" },
+  { label: "About", href: "/#about" },
+  { label: "Careers", href: "/career" },
   { label: "Team", href: "/team" },
   { label: "Contact", href: "/contact" },
 ];

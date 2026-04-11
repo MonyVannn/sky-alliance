@@ -69,7 +69,7 @@ export default function Navigation() {
           <NavLink href="/" isDarkPage={isDarkPage}>
             Home
           </NavLink>
-          <NavLink href="#about" isDarkPage={isDarkPage}>
+          <NavLink href="/#about" isDarkPage={isDarkPage}>
             About
           </NavLink>
           <NavLink href="/career" isDarkPage={isDarkPage}>
